@@ -1,7 +1,8 @@
+from abc import ABC
 from classes.state import State
 
 
-class AbstractConstructionGoods:
+class AbstractConstructionGoods(ABC):
 
     def __init__(self, producer_name='none', price_in_uah=0, color='black', weight_in_kilograms=0,
                  length_in_centimeters=0, width_in_centimeters=0, state=State.NEW):
