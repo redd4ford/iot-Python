@@ -1,9 +1,3 @@
-from construction_goods.classes.state import State
-from construction_goods.classes.material import Material
-from construction_goods.classes.form import Form
-from construction_goods.classes.bath import Bath
-from construction_goods.classes.sink import Sink
-from construction_goods.classes.toilet import Toilet
 import doctest
 
 
