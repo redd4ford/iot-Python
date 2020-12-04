@@ -5,6 +5,7 @@ from construction_goods.classes.abstract_construction_goods import AbstractConst
 import json
 from flask_cors import cross_origin
 import copy
+import time
 
 with open('secret.json') as f:
     SECRET = json.load(f)
@@ -76,17 +77,32 @@ def create_door():
 
 @app.route("/door", methods=["GET"])
 def get_doors():
+    time.sleep(1)
     all_doors = Door.query.all()
     result = doors_schema.dump(all_doors)
-    
+
+    producer = request.args.get('producer')
+    price = request.args.get('price')
+    height = request.args.get('height')
+    color = request.args.get('color')
+
+    if producer is not None:
+        result = [door for door in result if door['producer'].lower() == producer.lower()]
+    if price is not None:
+        result = [door for door in result if door['price'] <= int(price)]
+    if height is not None:
+        result = [door for door in result if door['height'] <= int(height)]
+    if color is not None:
+        result = [door for door in result if door['color'].lower() == color.lower()]
+
     response = jsonify(result)
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
 
 @app.route("/door/<id>", methods=["GET"])
-@cross_origin()
 def get_door_by_id(id):
+    time.sleep(0.5)
     door = Door.query.get(id)
     if not door:
         abort(404)
